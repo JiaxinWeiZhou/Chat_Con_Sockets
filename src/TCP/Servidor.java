@@ -3,7 +3,7 @@ package TCP;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class Chat {
+public class Servidor {
     public static void main(String[] args) {
         int puerto = 1234;
         ServerSocket servidor;
