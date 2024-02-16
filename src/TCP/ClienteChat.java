@@ -1,6 +1,7 @@
 package TCP;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
@@ -14,23 +15,23 @@ public class ClienteChat extends JFrame implements ActionListener, Runnable{
     DataInputStream entrada;
     DataOutputStream salida;
     String nombre;
-    private JTextField mensaje;
     private JTextArea textArea1;
+    private JTextField mensaje;
     private JButton btnEnviar;
     private JButton btnSalir;
     private JPanel jpanel;
     boolean repetir = true;
     boolean primerMensaje = true;
 
-
     public ClienteChat(Socket socket, String nombre){
-        super("Usuario: " + nombre+ " conectado");
+        System.out.println("Usuario: " + nombre+ " conectado");
         this.socket = socket;
         this.nombre = nombre;
 
         jpanel = new JPanel();
-        mensaje = new JTextField(40);
-        textArea1 = new JTextArea(15, 40);
+        jpanel.setPreferredSize(new Dimension(600,400));
+        mensaje = new JTextField(10);
+        textArea1 = new JTextArea(10, 60);
         btnEnviar = new JButton("Enviar");
         btnSalir = new JButton("Salir");
 
