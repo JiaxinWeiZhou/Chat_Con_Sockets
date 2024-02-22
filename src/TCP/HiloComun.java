@@ -6,19 +6,19 @@ public class HiloComun {
     int conexiones;
     int actuales;
     int maximo;
-    Socket chat[] = new Socket[maximo];
+    Socket[] chat = new Socket[maximo];
     String mensajes;
 
-    public HiloComun(int maximo, int actuales, int conexiones, Socket chat[]){
+    public HiloComun(int maximo, Socket[] chat){
         this.maximo = maximo;
-        this.actuales = actuales;
-        this.conexiones = conexiones;
+        this.actuales = 0;
+        this.conexiones = 0;
         this.chat = chat;
         mensajes= "";
     }
     public HiloComun() {}
 
-    public int getConexiones() {
+    public synchronized int getConexiones() {
         return conexiones;
     }
 
@@ -26,7 +26,7 @@ public class HiloComun {
         this.conexiones = conexiones;
     }
 
-    public int getActuales() {
+    public synchronized int getActuales() {
         return actuales;
     }
 
@@ -42,7 +42,7 @@ public class HiloComun {
         this.maximo = maximo;
     }
 
-    public String getMensajes() {
+    public synchronized String getMensajes() {
         return mensajes;
     }
 
@@ -53,7 +53,7 @@ public class HiloComun {
     public synchronized void addChat(Socket s, int i){
         chat[i] = s;
     }
-    public Socket getElementoChat(int i){
+    public synchronized Socket getElementoChat(int i){
         return chat[i];
     }
 }
