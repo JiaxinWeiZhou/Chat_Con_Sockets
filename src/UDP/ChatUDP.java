@@ -6,9 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Serial;
-import java.net.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
 
 public class ChatUDP extends JFrame implements ActionListener, Runnable {
     @Serial
@@ -17,11 +17,10 @@ public class ChatUDP extends JFrame implements ActionListener, Runnable {
     static InetAddress grupo = null;
     private static final int puerto = 1111;
     byte[] buffer = new byte[1024];
-    private JTextArea textAreaTexto;
-    private JTextField mensaje;
-    private JButton btnEnviar;
-    private JButton btnSalir;
-    private JPanel jpanel;
+    private final JTextArea textAreaTexto;
+    private final JTextField mensaje;
+    private final JButton btnEnviar;
+    private final JButton btnSalir;
     String nombre;
     boolean online = true;
 
@@ -29,7 +28,7 @@ public class ChatUDP extends JFrame implements ActionListener, Runnable {
         super(" VENTANA DE CHAT UDP - Usuario: " + nombre);
         this.nombre = nombre;
 
-        jpanel = new JPanel(new GridBagLayout());
+        JPanel jpanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
@@ -139,14 +138,8 @@ public class ChatUDP extends JFrame implements ActionListener, Runnable {
             }
         }while(true);
 
-        if (!nombre.trim().equals("")) {
-            ChatUDP server = new ChatUDP(nombre);
-            server.setVisible(true);
-            new Thread(server).start();
-
-        } else {
-            System.out.println("El nombre está vacío....");
-        }
-
+        ChatUDP server = new ChatUDP(nombre);
+        server.setVisible(true);
+        new Thread(server).start();
     }
 }
