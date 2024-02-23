@@ -26,6 +26,7 @@ public class ClienteChat extends JFrame implements ActionListener, Runnable {
     private boolean online = true;
 
     public ClienteChat(Socket socket, String nombre) throws IOException {
+        super(" VENTANA DE CHAT TCP - Usuario: " + nombre);
         System.out.println("Usuario: " + nombre + " conectado");
         this.socket = socket;
         this.nombre = nombre;
@@ -147,15 +148,23 @@ public class ClienteChat extends JFrame implements ActionListener, Runnable {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         int puerto = 1234;
         Socket socket;
 
-        String nombre = JOptionPane.showInputDialog("Introduce tu nombre:");
-        if (nombre.trim().isEmpty()) {
-            System.out.println("El nombre está vacío...");
-            return;
-        }
+        String nombre;
+        do{
+            nombre = JOptionPane.showInputDialog("Introduce tu nombre:");
+            if (nombre == null) {
+                System.exit(0);
+            }
+            if (nombre.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "El nombre está vacío. Inténtalo de nuevo.");
+            }else{
+                break;
+            }
+        }while(true);
+
         try {
             socket = new Socket("localhost", puerto);
             ClienteChat cliente = new ClienteChat(socket, nombre);
